@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
   const result = await User.findOneAndUpdate({ email: email }, { token: token, resetPasswordExpires: Date.now() + 5 * 60 * 1000 })
   // update user by adding token and expiration time 
   // create url andsend mail to user and return response 
-  const url = `http:localhost:3000/update-password${token}`;
+  const url = `http:localhost:3000/update-password/${token}`;
 
   await MailSender(email, "password reset link", `Password reset link is ${url}`);
   return res.status(200).json({
