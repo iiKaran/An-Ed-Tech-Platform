@@ -5,10 +5,11 @@ const User = require("../models/User");
 exports.auth = async(req,res,next)=>{
    try{
     // extract token 
-    const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer ", ""); 
+    console.log(req.header("Authorization"),"header id ")
+    const token = req.cookies.token || req.body.token ||req.header("Authorization").replace("Bearer ", ""); 
     // if token is missing 
     if(!token){
-     res.staus(401).json({
+     res.status(401).json({
       success: "False", 
       message:"Token is missing"
      })

@@ -28,7 +28,15 @@ export default function Navbar() {
         console.log("hee;");
         const {CATEGORIES_API} = categories ;
         const response = await apiConnector("GET", CATEGORIES_API);
-        console.log("object", response.data.data);
+        console.log("object giv", response.data.data);
+        if(response.data.data.length==0)
+        {
+            setSubLinks([{
+                name:"No Element found",
+                index:"0"
+            }])
+            return ;
+        }
         setSubLinks(response.data.data);
         }
        catch(err){
