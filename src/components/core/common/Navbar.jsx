@@ -21,31 +21,30 @@ export default function Navbar() {
     //         link: "/catalog/web-development"
     //     },
     // ];
-    const [subLinks,setSubLinks] = useState([])
+    const [subLinks, setSubLinks] = useState([])
 
-    useEffect(async ()=>{
-        try{
-        console.log("hee;");
-        const {CATEGORIES_API} = categories ;
-        const response = await apiConnector("GET", CATEGORIES_API);
-        console.log("object giv", response.data.data);
-        if(response.data.data.length==0)
-        {
-            setSubLinks([{
-                name:"No Element found",
-                index:"0"
-            }])
-            return ;
+    useEffect(async () => {
+        try {
+            console.log("hee;");
+            const { CATEGORIES_API } = categories;
+            const response = await apiConnector("GET", CATEGORIES_API);
+            console.log("object giv", response.data.data);
+            if (response.data.data.length == 0) {
+                setSubLinks([{
+                    name: "No Element found",
+                    index: "0"
+                }])
+                return;
+            }
+            setSubLinks(response.data.data);
         }
-        setSubLinks(response.data.data);
+        catch (err) {
+            console.log("cant get the categories");
         }
-       catch(err){
-        console.log("cant get the categories");
-       }
-    },[])
+    }, [])
     const location = useLocation();
     const { token } = useSelector((state) => state.auth);
- 
+
     const { cart } = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.profile);
     const { totalItems } = useSelector((state) => state.cart);
@@ -88,7 +87,7 @@ export default function Navbar() {
                                                     {
                                                         subLinks.length ? (
                                                             subLinks.map((subLink, index) => (
-                                                                <Link to={`/dashoard/${subLink.name}` } key={index} className=' w-[100%] p-1'>
+                                                                <Link to={`/dashoard/${subLink.name}`} key={index} className=' w-[100%] p-1'>
                                                                     <p className='mt-2 hover:opacity-50'>{subLink.name}</p>
                                                                 </Link>
                                                             ))
@@ -114,19 +113,19 @@ export default function Navbar() {
                     </ul>
                 </nav>
 
-                <div className="btns flex gap-x-4  items-center">
+                <div className="btns flex gap-x-6  items-center">
                     {/* login/signup/dashboard */}
                     {
                         user && user?.accountType != "Instructor" && (
                             <Link to="/dashboard/cart" className='relative'>
-                                <AiOutlineShoppingCart />
-                                {
-                                    totalItems > 0 && (
+                                <AiOutlineShoppingCart className='text-richblack-300' size={"28px"}/>
+                                {/* {
+                                     
                                         <span>
                                             {totalItems}
                                         </span>
-                                    )
-                                }
+                                    
+                                } */}
                             </Link>
                         )
                     }
@@ -149,8 +148,8 @@ export default function Navbar() {
                         )
                     }
                     {
-                        
-                        token !== null  && <ProfileDropDown></ProfileDropDown>
+
+                        token !== null && <ProfileDropDown></ProfileDropDown>
 
                     }
                 </div>

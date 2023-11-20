@@ -7,6 +7,7 @@ const User = require("../models/User");
 const Category = require("../models/Category");
 const {uploadImagetoCloudinary} = require("../utilities/ImageUploader");
 // createCourse 
+
 exports.createCourse = async (req, res) => {
 	try {
 		// Get user ID from request object
@@ -125,6 +126,61 @@ exports.createCourse = async (req, res) => {
 };
 
 // getAll course
+exports.enrollInCourse = async(req, res)=>{
+	try{
+       const userId = req.user.id;
+	   const {courseId}= req.body;
+
+	   const foundCourse =await Course.findById(courseId); 
+	   if(!foundCourse)
+	   {
+		return res.status(404).json({
+			success:false , 
+			message:"no such course found"
+		})
+	   }
+
+	   const updatedUser = await User.findByIdAndUpdate(userId ,{
+		$push:{courses:courseId}
+	   },{
+		new:true
+	   })
+	   return res.status(200).json({
+		success:true, 
+		message:"succesfully enrolled", 
+		data:updatedUser
+	   })
+	}
+	catch(err){
+		console.log(err); 
+		return res.status(500).json({
+			success:false , 
+			message:"something went wrong while enrolling"
+		})
+	}
+}
+
+exports.enrolledCourses = async(req, res)=>{
+	try{
+       const userId = req.user.id;
+
+	  
+
+	   const user = await User.findById(userId).populate("courses");
+	   return res.status(200).json({
+		success:true, 
+		message:"succesfully enrolled", 
+		data:user["courses"]
+	   })
+	}
+	catch(err){
+		console.log(err); 
+		return res.status(500).json({
+			success:false , 
+			message:"something went wrong while enrolling"
+		})
+	}
+}
 exports.getAllCourses = async (req, res) => {
 
  try {

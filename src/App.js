@@ -16,6 +16,9 @@ import { useSelector } from "react-redux";
 import DashBoard from "./Pages/DashBoard";
 import Settings from "./Pages/Settings";
 import Myprofile from "./Pages/Myprofile";
+import EnrolledPage from "./Pages/EnrolledPage";
+import CartPage from "./Pages/CartPage";
+import AddCourse from "./Pages/AddCourse";
 
 // log out modal will be the modal placed at center and it will show only if the modalstate has some data 
 // and this data will be set when we will be clicking the logout button and after if that the confirmation of logout 
@@ -24,7 +27,7 @@ import Myprofile from "./Pages/Myprofile";
 
 
 function App() {
-
+  const { user } = useSelector((state) => state.profile)
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -101,20 +104,25 @@ function App() {
         >
           <Route path="dashboard/my-profile" element={<Myprofile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
-          <Route path="/dashboard/my-courses" element={<div>My courses section</div>} />
-          <Route path="/dashboard/enrolled-courses" element={<div>enrolled-courses</div>} />
-          <Route path="/dashboard/purchase-history" element={<div>purchase-history</div>} />
-          {/* {
-        user?.accountType === ACCOUNT_TYPE.STUDENT && (
-          <>
-          <Route path="dashboard/cart" element={<Cart />} />
-          <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
-          </>
-        )
-      } */}
+          {user?.accountType == ACCOUNT_TYPE.STUDENT && (<>
+            <Route path="/dashboard/enrolled-courses" element={<EnrolledPage />} />
+            <Route path="/dashboard/purchase-history" element={<div>purchase-history</div>} />
+            <Route path="/dashboard/cart" element={<CartPage></CartPage>} />
+          </>)}
+
+
+
+        {
+          user?.accountType===ACCOUNT_TYPE.INSTRUCTOR &&(<>
+           <Route path="/dashboard/my-courses" element={<div>My courses section</div>} />
+           <Route path="/dashboard/add-course" element={<AddCourse/>} />
+          </>)
+        }
 
 
         </Route>
+
+        <Route path="*" element={<div className="border text-white">404 page not found</div>} />
 
 
 

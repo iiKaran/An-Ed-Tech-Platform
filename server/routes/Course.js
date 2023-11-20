@@ -2,7 +2,7 @@ const express = require("express");
 const  router = express.Router();
 const {auth, isAdmin, isInstructor , isStudent} = require("../middlewares/auth");
 // All course controllers
-const { createCourse, getAllCourses, getCourseDetails} = require("../controllers/Course");
+const { createCourse, getAllCourses, getCourseDetails,enrollInCourse,enrolledCourses} = require("../controllers/Course");
 // All category controllers
 const {createCategory,showAllCategories, categoryPageDetails} = require("../controllers/Category");
 // all rating and review controllers
@@ -37,16 +37,19 @@ const {createSubSection, updateSubSection, deleteSubSection} = require("../contr
 
     // category routes mounted  
 
-    router.post("/createCategory",auth, isAdmin, createCategory); 
+    router.post("/createCategory",auth, isInstructor, createCategory); 
     router.get("/showAllCategories", showAllCategories);
     router.post("/getCategoryPageDetails", categoryPageDetails);
-
 
  // Rating and review routes mounted 
  router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating",averageRating)
 router.get("/getReviews",getAllRating)
 
+
+// temp route to enrol in the course 
+router.post("/enrollinCourse", auth , isStudent,enrollInCourse);
+router.get("/getEnrolledCourses", auth ,isStudent,enrolledCourses);
 
 
 module.exports = router;
