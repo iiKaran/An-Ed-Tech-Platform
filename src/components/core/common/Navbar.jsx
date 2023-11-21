@@ -42,6 +42,8 @@ export default function Navbar() {
             console.log("cant get the categories");
         }
     }, [])
+
+    
     const location = useLocation();
     const { token } = useSelector((state) => state.auth);
 

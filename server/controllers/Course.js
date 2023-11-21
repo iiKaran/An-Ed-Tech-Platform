@@ -24,10 +24,14 @@ exports.createCourse = async (req, res) => {
 			status,
 			instructions,
 		} = req.body;
-
 		// Get thumbnail image from request files
 		const thumbnail = req.files.thumbnail;
-
+		if(tag)
+		tag = tag.split(',');
+	      
+		if(instructions)
+		instructions = instructions.split(',');
+        console.log("requirement",instructions,typeof(instructions));
 		// Check if any of the required fields are missing
 		// if (
 		// 	!courseName ||
@@ -51,6 +55,7 @@ exports.createCourse = async (req, res) => {
 			accountType: "Instructor",
 		});
 
+        console.log("tahs are",tag,typeof(tag));
 		if (!instructorDetails) {
 			return res.status(404).json({
 				success: false,
@@ -77,9 +82,9 @@ exports.createCourse = async (req, res) => {
 			courseName,
 			courseDescription,
 			instructor: instructorDetails._id,
-			whatYouWillLearn,
+			whatYouWillLearn:whatYouWillLearn,
 			price,
-			tag: tag,
+			tags: tag,
 			category: categoryDetails._id,
 			thumbnail: thumbnailImage.secure_url,
 			status: status,

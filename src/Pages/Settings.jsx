@@ -37,6 +37,7 @@ export default function Settings() {
     dispatch(updateProfile(formData.firstName, formData.lastName, formData.contact, formData.about, formData.dateofbirth, formData.gender, token, navigate))
   }
   const { open } = useSelector((state) => state.modal)
+  
   const [imageFile, setImageFile] = useState(null)
   const [previewSource, setPreviewSource] = useState(null)
   const previewFile = (file) => {

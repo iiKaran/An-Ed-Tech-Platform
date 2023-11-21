@@ -31,12 +31,13 @@ exports.createSection = async (req, res) => {
    $push: {
     courseContent: newSection._id
    }
-  }, { new: true })
+  },{ new: true }).populate("courseContent")
 
   // return response 
   return res.status(200).json({
    success: true,
-   message: " section created"
+   message: " section created", 
+   data:updatedCourse
   })
 
  }
@@ -82,22 +83,25 @@ exports.updateSection = async (req, res) => {
 exports.deleteSection = async (req, res) => {
  try {
   // sending the id in parns
-      const {sectionId} = req.body; 
-      
+      const {section_id,courseId} = req.body; 
+    console.log("the reqw", section_id, courseId)
       // validate 
-      if(!sectionId){
+      if(!section_id){
        res.status(500).json({
         success: false,
         message: " Missing details"
        })
       }
-      const removedSection = await Section.findByIdAndDelete({_id:sectionId});
+      const removedSection = await Section.findByIdAndDelete({_id:section_id});
+      const updatedCourse = await Course.findById(courseId);
+
   
       // update the course do we need to delete the entry from course schema ?? 
       
       return res.status(200).json({
        success: true,
        message: " section updated", 
+       data:updatedCourse
       })
       
  }

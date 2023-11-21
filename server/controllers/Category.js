@@ -30,7 +30,7 @@ exports.createCategory = async(req, res)=>{
 // get all categories
 exports.showAllCategories = async (req, res)=>{
  try{
-     const allcats= await Category.find({},{name:true , description:true});
+     const allcats= await Category.find({});
      res.status(200).json({
          success: true , 
          message: " chko categories", 

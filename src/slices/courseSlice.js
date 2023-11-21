@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    step: 1,
-    course: null,
+    step: localStorage.getItem('step')?JSON.parse(localStorage.getItem('step')):1,
+    course: localStorage.getItem('course')?JSON.parse(localStorage.getItem('course')):null,
     editCourse: false,
     paymentLoading: false
 }

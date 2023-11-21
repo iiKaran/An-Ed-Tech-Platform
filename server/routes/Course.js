@@ -25,11 +25,11 @@ const {createSubSection, updateSubSection, deleteSubSection} = require("../contr
     // create/update/delete a section 
     router.post("/createSection",auth , isInstructor, createSection); 
     router.post("/updateSection", auth , isInstructor, updateSection); 
-    router.delete("/deleteSection", auth , isInstructor ,deleteSection); 
+    router.post("/deleteSection", auth , isInstructor ,deleteSection); 
     // create/update/delete a subsection 
     router.post("/createSubSection",auth , isInstructor, createSubSection); 
     router.post("/updateSubSection", auth , isInstructor, updateSubSection); 
-    router.delete("/deleteSubSection", auth , isInstructor ,deleteSubSection); 
+    router.post("/deleteSubSection", auth , isInstructor ,deleteSubSection); 
     //get all courses
     router.get("/getAllCourses", getAllCourses)
     // Get Details for a Specific Courses
