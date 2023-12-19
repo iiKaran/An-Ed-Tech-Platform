@@ -13,7 +13,8 @@ import ContactUsForm from "./Pages/ContactUs";
 import CloseRoute from "./Pages/CloseRoute";
 import { ACCOUNT_TYPE } from "./utils/constants"
 import { useSelector } from "react-redux";
-import DashBoard from "./Pages/DashBoard";
+// import DashBoard from "./Pages/DashBoard";
+import Dashboard from "./Pages/Dashboard"
 import Settings from "./Pages/Settings";
 import Myprofile from "./Pages/Myprofile";
 import EnrolledPage from "./Pages/EnrolledPage";
@@ -98,13 +99,13 @@ function App() {
         <Route
           element={
             <CloseRoute>
-              <DashBoard />
+              <Dashboard />
             </CloseRoute>
           }
         >
           <Route path="dashboard/my-profile" element={<Myprofile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
-          {user?.accountType == ACCOUNT_TYPE.STUDENT && (<>
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (<>
             <Route path="/dashboard/enrolled-courses" element={<EnrolledPage />} />
             <Route path="/dashboard/purchase-history" element={<div>purchase-history</div>} />
             <Route path="/dashboard/cart" element={<CartPage></CartPage>} />
@@ -112,20 +113,14 @@ function App() {
 
 
 
-        {
-          user?.accountType===ACCOUNT_TYPE.INSTRUCTOR &&(<>
-           <Route path="/dashboard/my-courses" element={<div>My courses section</div>} />
-           <Route path="/dashboard/add-course" element={<AddCourse/>} />
-          </>)
-        }
-
-
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (<>
+              <Route path="/dashboard/my-courses" element={<div>My courses section</div>} />
+              <Route path="/dashboard/add-course" element={<AddCourse />} />
+            </>)
+          }
         </Route>
-
         <Route path="*" element={<div className="border text-white">404 page not found</div>} />
-
-
-
       </Routes>
     </div>
 

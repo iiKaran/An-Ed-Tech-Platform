@@ -1,43 +1,50 @@
 const SubSection = require("../models/SubSection");
-
-const Section = require("../models/SubSection")
+const mongoose = require("mongoose");
+const Section = require("../models/Section")
+const Course = require("../models/Course");
 const { uploadImagetoCloudinary } = require("../utilities/ImageUploader");
 
 // create subsection
 exports.createSubSection = async (req, res) => {
-
   try {
 
-    const { title, timeDuration, description, sectionId } = req.body;
-    const video = req.files.file;
-  console.log(video)
-    if (!title || !timeDuration || !description || !sectionId) {
+    const { title, link, description, section_id, course_id } = req.body;
+  
+    console.log("thwe requested")
+    if (!title || !description || !section_id || !course_id) {
       return res.status(500).json({
         success: false,
         message: " details are missing "
       })
     }
-    const uploadDetails = await uploadImagetoCloudinary(
-      video,
-      "StudyNotion"
-    )
+   console.log(section_id)
 
-     const url =uploadDetails.secure_url;
-    const newSubSection = SubSection.create({
+    const newSubSection = await SubSection.create({
       title,
       description,
-      timeDuration,
-      videoUrl:url
+      videoUrl:link
     });
 
-    const updatedSection = await Section.findByIdAndUpdate(sectionId, {
+    const updatedSection = await Section.findByIdAndUpdate(section_id, {
       $push: { subSections: newSubSection._id }
-    }, { new: true })
+    }, { new: true }).populate("subSections"); 
+  
+    console.log("updated section",updatedSection);
 
+    const updatedCourse = await Course.findById({_id:course_id}).populate({
+      path: 'courseContent',
+      populate:{
+        path:'subSections',
+      },
+    }).exec();
+   
+   
+    console.log("the updated course", updatedCourse)
 
     res.status(200).json({
       success: true,
-      message: " subsection created succesfully"
+      message: " subsection created succesfully", 
+      data:updatedCourse
     })
   }
   catch (err) {
@@ -96,7 +103,9 @@ exports.updateSubSection = async (req, res) => {
 //delete subsection 
 exports.deleteSubSection = async (req, res) => {
   try {
-     const {subSectionId} = req.body ; 
+     const {subsection_id, course_id} = req.body ; 
+     console.log("del req",subsection_id, course_id)
+     const subSectionId = subsection_id;
      if(!subSectionId){
       return res.status(500).json({
         success: false,
@@ -104,15 +113,25 @@ exports.deleteSubSection = async (req, res) => {
       })
      }
      await SubSection.findByIdAndDelete(subSectionId);
+     const updatedCourse = await Course.findById({_id:course_id}).populate({
+      path: 'courseContent',
+      populate:{
+        path:'subSections',
+      },
+    }).exec();
+
      res.status(200).json({
       success:true, 
-      message:"Subsection deleted succesfully"
+      message:"Subsection deleted succesfully",
+      data:updatedCourse
      })
+   
   }
   catch (err) {
     res.status(500).json({
       success: false,
-      message: " Something Went Wrong"
+      message: "Something Went Wrong",
+      
     })
   }
 }

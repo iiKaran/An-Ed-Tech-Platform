@@ -31,7 +31,10 @@ exports.createSection = async (req, res) => {
    $push: {
     courseContent: newSection._id
    }
-  },{ new: true }).populate("courseContent")
+  },{ new: true }).populate({path:'courseContent',
+  populate:{
+    path:'subSections',
+  }})
 
   // return response 
   return res.status(200).json({
@@ -93,7 +96,12 @@ exports.deleteSection = async (req, res) => {
        })
       }
       const removedSection = await Section.findByIdAndDelete({_id:section_id});
-      const updatedCourse = await Course.findById(courseId);
+      const updatedCourse = await Course.findById(courseId).populate({
+        path:'courseContent', 
+        populate:{
+          path:'subSections',
+        }
+      });
 
   
       // update the course do we need to delete the entry from course schema ?? 

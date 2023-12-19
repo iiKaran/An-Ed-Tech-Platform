@@ -9,8 +9,9 @@ import useDispatch from 'react-redux'
 // api connector to make a backend call 
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from '../apis'
+import { setCourse } from '../../slices/courseSlice'
 
-const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API} =courseEndpoints;
+const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API} =courseEndpoints;
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
@@ -123,6 +124,27 @@ export const deleteSection = async (data, token) => {
     console.log("the essddff", result) ;
   } catch (error) {
     console.log("DELETE SECTION API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+}
+export const deleteSubSection = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log("DELETE SubSECTION API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Section")
+    }
+    toast.success("Course SUBSection Deleted")
+    result = response?.data?.data
+    console.log("the essddff", result) ;
+  } catch (error) {
+    console.log("DELETE SUBSECTION API ERROR............", error)
     toast.error(error.message)
   }
   toast.dismiss(toastId)
