@@ -2,7 +2,7 @@ const express = require("express");
 const  router = express.Router();
 const {auth, isAdmin, isInstructor , isStudent} = require("../middlewares/auth");
 // All course controllers
-const { createCourse, getAllCourses, getCourseDetails,enrollInCourse,enrolledCourses} = require("../controllers/Course");
+const { createCourse, getAllCourses, getCourseDetails,enrollInCourse,enrolledCourses, updateStatus} = require("../controllers/Course");
 // All category controllers
 const {createCategory,showAllCategories, categoryPageDetails} = require("../controllers/Category");
 // all rating and review controllers
@@ -51,5 +51,8 @@ router.get("/getReviews",getAllRating)
 router.post("/enrollinCourse", auth , isStudent,enrollInCourse);
 router.get("/getEnrolledCourses", auth ,isStudent,enrolledCourses);
 
+
+// update the course status 
+router.post("/updateCourseStatus",auth , isInstructor,updateStatus)
 
 module.exports = router;

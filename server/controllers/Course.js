@@ -6,6 +6,7 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const {uploadImagetoCloudinary} = require("../utilities/ImageUploader");
+const { setStep } = require("../../src/slices/courseSlice");
 // createCourse 
 
 exports.createCourse = async (req, res) => {
@@ -254,4 +255,26 @@ exports.getCourseDetails = async (req, res) => {
    mesaage: " something went wrong while getting corse details"
   })
  }
+}
+
+exports.updateStatus = async(req, res)=>{
+	try{
+		const {course_id} = req.body; 
+        const updatedCourse = await Course.findByIdAndUpdate(course_id,{
+			status:"Public"
+		}); 
+		
+		
+		return res.status(200).json({
+			success:true, 
+			message:"Course Get Public"
+		})
+	}
+	catch(err)
+	{
+		return res.status(500).json({
+			success:false, 
+			message:"Error While Changing Status"
+		})
+	}
 }

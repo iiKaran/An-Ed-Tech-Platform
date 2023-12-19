@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { IoAddCircleOutline } from "react-icons/io5"
 import { createSection } from '../../../../services/operations/CourseApi'
-import { setCourse } from '../../../../slices/courseSlice'
+import { setCourse, setStep } from '../../../../slices/courseSlice'
 import toast from 'react-hot-toast'
 import NestedView from './NestedView'
 export default function CoursePublisher() {
@@ -58,18 +58,26 @@ export default function CoursePublisher() {
       <div className=' flex justify-end px-5 gap-5'>
         <button type="button" outline="true" className=' mt-9 w-[27%] text-center capitalize text-[13px] px-6 py-3  font-bold rounded-lg text-white border' > Cancel</button>
         <button type="button" className=' mt-9 w-[27%] text-center capitalize text-[13px] px-6 py-3  font-bold rounded-lg bg-yellow-50 text-black' onClick={() => {
-        
-          if(course.courseContent.length<=0)
-          {
+          let flag = true;
+          if (course.courseContent.length <= 0) {
             toast.error("Add Atleast One Section")
             return;
           }
-          if(course?.courseContent?.subSections)
-          {
-            toast.error("Add Atleast One lecture to every section")
-            return;
+          course.courseContent.forEach(element => {
+
+            if (element.subSections?.length <= 0) {
+              toast.error("Each Section Should have Atleast one lecture");
+              flag = false;
+              return;
+            }
+          });
+          if (flag) {
+            toast.success("Course Updated");
+            dispatch(setStep(3));
           }
-        toast.success("clicked");
+          return;
+
+
         }} > Next</button>
       </div>
     </div>

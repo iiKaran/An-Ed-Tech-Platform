@@ -11,7 +11,7 @@ import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from '../apis'
 import { setCourse } from '../../slices/courseSlice'
 
-const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API} =courseEndpoints;
+const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API,UPDATE_COURSE_STATUS_API} =courseEndpoints;
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
@@ -145,6 +145,28 @@ export const deleteSubSection = async (data, token) => {
     console.log("the essddff", result) ;
   } catch (error) {
     console.log("DELETE SUBSECTION API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+export const makeItPublic = async (data, token) => {
+  let result = null;
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST",UPDATE_COURSE_STATUS_API, data, {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    })
+    console.log("EDIT COURSE API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Update Course Details")
+    }
+    toast.success("Course Updated Successfully")
+    result = response?.data?.data
+  } catch (error) {
+    console.log("EDIT COURSE API ERROR............", error)
     toast.error(error.message)
   }
   toast.dismiss(toastId)
