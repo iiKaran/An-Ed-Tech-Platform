@@ -31,7 +31,7 @@ const {createSubSection, updateSubSection, deleteSubSection} = require("../contr
     router.post("/updateSubSection", auth , isInstructor, updateSubSection); 
     router.post("/deleteSubSection", auth , isInstructor ,deleteSubSection); 
     //get all courses
-    router.get("/getAllCourses", getAllCourses)
+    router.get("/getAllCourses",auth,isInstructor,getAllCourses)
     // Get Details for a Specific Courses
     router.post("/getCourseDetails", getCourseDetails)
 

@@ -9,9 +9,9 @@ import useDispatch from 'react-redux'
 // api connector to make a backend call 
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from '../apis'
-import { setCourse } from '../../slices/courseSlice'
+import { setCourse } from '../../slices/courseSlice.js'
 
-const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API,UPDATE_COURSE_STATUS_API} =courseEndpoints;
+const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API,UPDATE_COURSE_STATUS_API, GET_ALL_COURSE_API} =courseEndpoints;
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
@@ -167,6 +167,28 @@ export const makeItPublic = async (data, token) => {
     result = response?.data?.data
   } catch (error) {
     console.log("EDIT COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+export const getCoursesOfUser = async (token) => {
+  let result = null;
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("GET",GET_ALL_COURSE_API,{token}, {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },token)
+    console.log("ALL COURSE API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not FEtch Course Details")
+    }
+    toast.success("Course Fetched Successfully")
+    result = response?.data?.data
+  } catch (error) {
+    console.log("GET COURSEs API ERROR............", error)
     toast.error(error.message)
   }
   toast.dismiss(toastId)

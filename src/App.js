@@ -13,6 +13,7 @@ import ContactUsForm from "./Pages/ContactUs";
 import CloseRoute from "./Pages/CloseRoute";
 import { ACCOUNT_TYPE } from "./utils/constants"
 import { useSelector } from "react-redux";
+import MyCourse from "./Pages/MyCourse";
 // import DashBoard from "./Pages/DashBoard";
 import Dashboard from "./Pages/Dashboard"
 import Settings from "./Pages/Settings";
@@ -115,7 +116,7 @@ function App() {
 
           {
             user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (<>
-              <Route path="/dashboard/my-courses" element={<div>My courses section</div>} />
+              <Route path="/dashboard/my-courses" element={<MyCourse></MyCourse>} />
               <Route path="/dashboard/add-course" element={<AddCourse />} />
             </>)
           }

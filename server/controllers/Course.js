@@ -6,7 +6,6 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const {uploadImagetoCloudinary} = require("../utilities/ImageUploader");
-const { setStep } = require("../../src/slices/courseSlice");
 // createCourse 
 
 exports.createCourse = async (req, res) => {
@@ -94,9 +93,7 @@ exports.createCourse = async (req, res) => {
 
 		// Add the new course to the User Schema of the Instructor
 		await User.findByIdAndUpdate(
-			{
-				_id: instructorDetails._id,
-			},
+			
 			{
 				$push: {
 					courses: newCourse._id,
@@ -188,19 +185,11 @@ exports.enrolledCourses = async(req, res)=>{
 	}
 }
 exports.getAllCourses = async (req, res) => {
-
  try {
-  const allCourses = await Course.find({}, {
-   courseName: true,
-   courseDescription: true,
-   thumbnail: true,
-   instructer: true,
-   ratingAndReview: true,
-   studentsEnrolled: true,
-   instructer: true
-  }).populate("instructer")
+  const userId = req.user.id;
+  const allCourses = await User.findById(userId).populate("courses");
   return res.status(200).json({
-   response: allCourses,
+   data: allCourses.courses,
    message: " Fetched All courses",
    success: true
   })

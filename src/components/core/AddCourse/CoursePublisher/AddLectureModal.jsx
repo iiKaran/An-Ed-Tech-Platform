@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { createSubSection } from '../../../../services/operations/CourseApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCourse } from '../../../../slices/courseSlice';
+import { setCourse } from '../../../../slices/courseSlice.js';
 export default function AddLectureModal(props) {
     const dispatch = useDispatch();
     const {token}= useSelector((state)=>state.auth);

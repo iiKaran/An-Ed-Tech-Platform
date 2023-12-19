@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { IoAddCircleOutline } from "react-icons/io5"
 import { createSection } from '../../../../services/operations/CourseApi'
-import { setCourse, setStep } from '../../../../slices/courseSlice'
+import { setCourse, setStep } from '../../../../slices/courseSlice.js'
 import toast from 'react-hot-toast'
 import NestedView from './NestedView'
 export default function CoursePublisher() {

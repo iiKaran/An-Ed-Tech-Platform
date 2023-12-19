@@ -22,3 +22,15 @@ html , body{
     @apply font-extrabold capitalize;
     
   }
+  td{
+    /* border: 2px solid rgb(202, 202, 202); */
+    width: 22%;
+    text-transform: capitalize;
+  }
+  td img{
+    margin: auto;
+  }
+  tr{
+    margin-bottom: 50px;
+  }
+  

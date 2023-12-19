@@ -7,7 +7,7 @@ import {toast} from 'react-hot-toast'
 import { useState } from 'react';
 import { apiConnector } from '../../../.././services/apiconnector'
 import { courseEndpoints } from '../../../.././services/apis'
-import { setStep,setCourse} from '../../../../slices/courseSlice';
+import { setStep,setCourse} from '../../../../slices/courseSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCourseDetails,editCourseDetails} from '../../../../services/operations/CourseApi';
 export default function Index() {
@@ -123,12 +123,12 @@ export default function Index() {
   }
 
   return (
-    <div >
+    <div className='mt-3 py-7 pb-12'>
 
       <form className='flex flex-col   px-5 gap-4' onSubmit={handleSubmit(onSubmit)}>
         {/* course Name */}
         <div className="flex flex-col gap-1 ">
-          <label className="w-[100%]  ">
+          <label className="w-[100%]">
             <p className="mb-1 text-[0.975rem] leading-[1.375rem] text-richblack-5">
               Course Title <sup className="text-pink-200 font-bold">*</sup>
             </p>

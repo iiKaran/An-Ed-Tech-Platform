@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md"
 import { RxDropdownMenu } from "react-icons/rx"
 import { RiDeleteBin6Line } from "react-icons/ri"
-import { setCourse } from '../../../../slices/courseSlice'
+import { setCourse } from '../../../../slices/courseSlice.js'
 import { deleteSection, deleteSubSection } from '../../../../services/operations/CourseApi';
 import ConfirmationModal from '../../common/ConfirmationModal'
 import AddLectureModal from './AddLectureModal'
