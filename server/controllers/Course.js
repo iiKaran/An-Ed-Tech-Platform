@@ -93,7 +93,7 @@ exports.createCourse = async (req, res) => {
 
 		// Add the new course to the User Schema of the Instructor
 		await User.findByIdAndUpdate(
-			
+			userId,
 			{
 				$push: {
 					courses: newCourse._id,
@@ -106,7 +106,7 @@ exports.createCourse = async (req, res) => {
 			{ _id: category },
 			{
 				$push: {
-					course: newCourse._id,
+					courses: newCourse._id,
 				},
 			},
 			{ new: true }
@@ -187,10 +187,13 @@ exports.enrolledCourses = async(req, res)=>{
 exports.getAllCourses = async (req, res) => {
  try {
   const userId = req.user.id;
-  const allCourses = await User.findById(userId).populate("courses");
+
+  const user = await User.findById(userId).populate("courses");
+
+  const allCourses =  user.courses; 
   return res.status(200).json({
-   data: allCourses.courses,
-   message: " Fetched All courses",
+   data: allCourses,
+   message: "Fetched All courses",
    success: true
   })
  }

@@ -30,11 +30,6 @@ exports.updateProfile = async (req, res) => {
       firstName: firstName,
       lastName: lastName
   },{new:true}).populate("additionalDetails")
-
-
-
-    
-
     return res.status(200).json({
       success: true,
       message: "Profile Updated Succesfully",

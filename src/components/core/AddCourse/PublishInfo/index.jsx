@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CiEdit } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { setCourse } from '../../../../slices/courseSlice.js';
+import { setCourse, setStep } from '../../../../slices/courseSlice.js';
 import { makeItPublic } from '../../../../services/operations/CourseApi';
 export default function PublishInfo() {
   const { course } = useSelector((state) => state.course);
@@ -13,7 +13,10 @@ export default function PublishInfo() {
   { 
     try{
 
-        const response = makeItPublic({course_id:course._id},token);   
+        const response = makeItPublic({course_id:course._id},token);
+        dispatch(setCourse(null)); 
+        dispatch(setStep(1)); 
+        navigator("/dashboard/mycourses");
     }
     catch(err)
     {

@@ -53,6 +53,6 @@ router.get("/getEnrolledCourses", auth ,isStudent,enrolledCourses);
 
 
 // update the course status 
-router.post("/updateCourseStatus",auth , isInstructor,updateStatus)
+router.post("/updateCourseStatus",auth,isInstructor,updateStatus);
 
 module.exports = router;

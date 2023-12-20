@@ -36,7 +36,7 @@ const data = [
 ]
 export default function MyCourse() {
     const [courses, setCourses] = useState(null);
-    const token = useSelector((state) => state.auth)
+    const {token} = useSelector((state) => state.auth)
     async function fetchCourses() {
         const result = await getCoursesOfUser(token);
         setCourses(result);

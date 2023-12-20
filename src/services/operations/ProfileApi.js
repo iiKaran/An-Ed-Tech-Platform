@@ -15,7 +15,8 @@ export function updateProfile(firstName, lastName, contact, about, dateofbirth, 
     try {
 
 
-      const response = await apiConnector("POST", UPDATE_PROFILE_API, {
+      console.log("comng token", token); 
+    const response = await apiConnector("POST", UPDATE_PROFILE_API, {
         firstName,
         lastName,
         contact,
@@ -83,7 +84,7 @@ export function getEnrolledCourses(token) {
       const toastId = toast.loading("Loading...")
       dispatch(setLoading(true))
       const response = await apiConnector("GET", GET_USER_ENROLLED_COURSES_API, token, {
-        // "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${token}`
       });
       console.log("response from tjhe enroled courses",response.data.data);

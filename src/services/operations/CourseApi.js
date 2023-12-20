@@ -177,16 +177,23 @@ export const getCoursesOfUser = async (token) => {
   let result = null;
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("GET",GET_ALL_COURSE_API,{token}, {
+
+    console.log("the token going", token);
+    const response = await apiConnector("GET",GET_ALL_COURSE_API,{token},{
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
-    },token)
+    })
+
+    console.log("herr is sthe gcb9dgofvrgvofv4ve", response)
+    
     console.log("ALL COURSE API RESPONSE............", response)
-    if (!response?.data?.success) {
-      throw new Error("Could Not FEtch Course Details")
-    }
+    // if (!response?.data?.success) {
+    //   throw new Error("Could Not FEtch Course Details")
+    // }
     toast.success("Course Fetched Successfully")
     result = response?.data?.data
+
+
   } catch (error) {
     console.log("GET COURSEs API ERROR............", error)
     toast.error(error.message)
