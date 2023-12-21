@@ -41,7 +41,7 @@ export default function Myprofile() {
         <h3 className='font-semibold text-lg'>About / Bio:</h3>
 
         <div className="about py-8 mt-2 capitalize  text-richblack-300 ">
-          {console.log(user.additionalDetails)}
+          {/* {console.log(user.additionalDetails)} */}
          {user.additionalDetails.about?user.additionalDetails.about:"About section for the student"}
         </div>
         <Link className="btn" to={"/dashboard/settings"}>

@@ -28,7 +28,6 @@ export default function EnrolledPage() {
             return;
         }
         catch (err) {
-            console.log("Error IN GETTUNG ENROLLED COURSES .....", err)
             toast.error("Could not get any Enrolled Course")
         }
     }

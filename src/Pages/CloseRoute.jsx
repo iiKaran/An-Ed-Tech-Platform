@@ -5,9 +5,7 @@ export default function CloseRoute({ children }) {
 
     const { token } = useSelector((state) => state.auth);
     
-    console.log("inside close rout");
     if (token !== null){
-        console.log("token cjeck",token);
         return children
     }
         

@@ -14,9 +14,7 @@ export default function ProfileDropdown() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
-  console.log("the user from the,  aopi", user);
   useOnClickOutside(ref, () => setOpen(false))
-
   // if (!user) return null
 
   return (

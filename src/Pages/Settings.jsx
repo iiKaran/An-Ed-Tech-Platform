@@ -57,7 +57,7 @@ export default function Settings() {
   }
   const handleFileUpload = () => {
     try {
-      console.log("uploading...")
+      // console.log("uploading...")
       setLoading(true)
       const formData = new FormData()
       formData.append("displayPicture", imageFile)

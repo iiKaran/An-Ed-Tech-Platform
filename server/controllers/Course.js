@@ -211,10 +211,10 @@ exports.getAllCourses = async (req, res) => {
 exports.getCourseDetails = async (req, res) => {
 
  try { // get course id 
-  const courseId = req.body;
+  const {courseId} = req.body;
   // find the details of course 
   const courseDetails = await Course.find({ _id: courseId }).populate({
-   path: "instructor",
+   path: "instructer",
    populate: {
     path: "additionalDetails",
    },
@@ -223,7 +223,7 @@ exports.getCourseDetails = async (req, res) => {
   .populate({
    path: "courseContent",
    populate: {
-    path: subSection
+    path: "subSections"
     ,
    },
   }).exec();
@@ -237,7 +237,7 @@ exports.getCourseDetails = async (req, res) => {
   return res.status(200).json({
    success: true,
    mesaage: "Course details fetched succesfully",
-   response: courseDetails,
+   data: courseDetails,
   })
  }
  catch (err) {

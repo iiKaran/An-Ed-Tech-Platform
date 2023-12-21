@@ -35,7 +35,9 @@ export default function SideBar() {
                     sidebarLinks.map((element, index) => (
 
                         (!element.type || user && user.accountType === element.type) ?
-                            <SideLink path={element.path} icon={element.icon} title={element.name} key={element.id}></SideLink>
+                            <span key={index}>
+                            <SideLink index={index} path={element.path} icon={element.icon} title={element.name} ></SideLink>
+                            </span>
                             :
                             (null)
                     ))

@@ -31,7 +31,6 @@ export default function PublishInfo() {
     <div className='space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6'>
       <h3 className='text-2xl text-center font-semibold text-richblack-5'>Update Course Status</h3>
 
-      {console.log("the course is ", course.courseName)}
       {
 
         course && <div className='flex flex-col'> 

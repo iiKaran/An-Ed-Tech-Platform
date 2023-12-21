@@ -1,3 +1,4 @@
+
 const express = require("express"); 
 const  router = express.Router();
 const {auth, isAdmin, isInstructor , isStudent} = require("../middlewares/auth");
@@ -40,7 +41,7 @@ const {createSubSection, updateSubSection, deleteSubSection} = require("../contr
     router.post("/createCategory",auth, isInstructor, createCategory); 
     router.get("/showAllCategories", showAllCategories);
     router.post("/getCategoryPageDetails", categoryPageDetails);
-
+    
  // Rating and review routes mounted 
  router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating",averageRating)

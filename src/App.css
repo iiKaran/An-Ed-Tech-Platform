@@ -34,3 +34,66 @@ html , body{
     margin-bottom: 50px;
   }
   
+  .section_heading {
+    @apply text-2xl font-bold text-richblack-5 lg:text-4xl;
+  }
+  
+  
+  .accordion__button {
+    background-color: #161D29 !important;
+    color: #DBDDEA !important;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    display: flex;
+   
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    border-radius: 4px;
+}
+.accordion {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.accordion__item + .accordion__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  
+
+}
+
+
+.accordion__button:hover {
+  background-color: #ddd;
+  
+}
+
+.accordion__button:before {
+  
+  content: '';
+  height: 0px !important;
+  width: 10px;
+  margin-right: 12px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(-45deg);
+  display: none !important;
+
+}
+
+.accordion__button[aria-expanded='true']::before,
+.accordion__button[aria-selected='true']::before {
+  transform: rotate(45deg);
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+.accordion__panel {
+  padding: 20px;
+  animation: fadein 0.35s ease-in;
+}
