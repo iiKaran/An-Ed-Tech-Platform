@@ -41,7 +41,7 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({
       success: false,
       message: " something went wrong while updatin profile",
-      data: updatedUser
+      // data: updatedUser
     })
   }
 }
