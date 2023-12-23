@@ -1,31 +1,116 @@
-# React & Tailwind CSS Starter Pack
-
+# Ed-Tech-Platform 
 This is a starter pack for creating React projects with Tailwind CSS configured. It uses React version **18.2** and Tailwind CSS version **3.2**.
+## Features
 
-## Usage
+### Authentication
 
-This starter pack includes a basic setup for using **Tailwind CSS with React**. To start building your own components and styles, follow these steps:
+- User registration and login functionality.
+- Secure password storage using bcrypt.
+- JSON Web Token (JWT) based authentication for secure communication between client and server.
 
-1. Clone the repository to your local machine.
-    ```sh
-    git clone https://github.com/thepranaygupta/react-tailwind-css-starter-pack.git
-    ```
+### Authorization
 
-1. Install the required packages.
-    ```sh
-    cd react-tailwind-css-starter-pack
-    npm install
-    ```
+- Role-based access control (RBAC) for distinguishing between students and instructors.
+- Protected routes and actions based on user roles.
 
-1. Start the development server.
-    ```sh
-    npm start
-    ```
-1. Open the project in your browser at [`http://localhost:3000`](http://localhost:3000) to view your project.
-1. Create your React components and add your styles using Tailwind classes. You can also create new CSS files and import them into your components.
+### Email Verification
 
-The project is set up to use `postcss-cli` to process your CSS files. You can add your own `tailwind.config.js` file to customize your Tailwind setup.
+- Email verification for new user accounts.
+- Secure confirmation process to ensure valid and active user accounts.
 
-## Contributing
+### Form Handling
 
-Contributions are welcome! If you have any suggestions or find any issues, please feel free to open an issue or a pull request.
+- Form validation for user input.
+- User-friendly error messages for form submissions.
+
+### File Handling
+
+- File upload functionality for course content (videos, documents, etc.).
+- Secure file storage and retrieval.
+
+### Upload Course
+
+- Instructors can easily upload new courses.
+- Provide relevant details such as course title, description, and content files.
+
+### Edit Course
+
+- Instructors can edit existing course details.
+- Update course information, add new content, or modify existing content.
+
+### Watch Progress
+
+- Track and display the user's progress in watching a course.
+- Resume functionality for users to continue from where they left off.
+
+### Razorpay Integration
+
+- Seamless integration with Razorpay for course payments.
+- Secure and reliable payment processing.
+
+### Interactive Tracker
+
+- Visual representation of course progress for students.
+- Intuitive tracker to show completed sections, quizzes, or assignments.
+
+### Modal Handling
+
+- Modal components for interactive and responsive user interfaces.
+- Use modals for actions like course purchase confirmation or editing course details.
+
+## Tech Stack
+
+- **MERN Stack:**
+  - MongoDB: Database for storing course and user data
+  - Express.js: Backend framework for handling server-side logic
+  - React.js: Frontend library for building user interfaces
+  - Node.js: JavaScript runtime for server-side execution
+
+- **Nodemailer:**
+  - Email sending functionality for user registration and verification.
+  - Notification emails for various user actions.
+
+- **bcrypt:**
+  - Password hashing for secure storage of user credentials.
+  - Enhanced security for user authentication.
+
+- **Cloudinary:**
+  - Cloud-based file storage for handling uploaded course content.
+  - Seamless integration for secure and scalable file handling.
+
+- **JWT Token:**
+  - JSON Web Token-based authentication for secure communication between client and server.
+  - Efficient and secure way to handle user authentication.
+
+- **React Redux Toolkit:**
+  - State management for React applications.
+  - Efficient handling of complex application state, including user authentication, course data, and UI state.
+
+
+
+Usage
+For Students
+Register or log in to your account.
+Browse available courses.
+Purchase a course.
+Access purchased courses in your dashboard.
+Start watching courses.
+For Instructors
+Register or log in to your instructor account.
+Navigate to the instructor dashboard.
+Add a new course with relevant details.
+Update or delete existing courses as needed.
+Tech Stack
+MongoDB: Database for storing course and user data
+Express.js: Backend framework for handling server-side logic
+React.js: Frontend library for building user interfaces
+Node.js: JavaScript runtime for server-side execution
+Contributing
+We welcome contributions! If you'd like to contribute, please follow our contribution guidelines.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+
+
