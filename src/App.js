@@ -23,6 +23,8 @@ import CartPage from "./Pages/CartPage";
 import AddCourse from "./Pages/AddCourse";
 import CourseCatalogPage from "./Pages/CourseCatalogPage";
 import CourseDetails from "./Pages/CourseDetails";
+import CompleteView from "./Pages/CourseView/CompleteView";
+import CourseBar from "./Pages/CourseView/CourseBar";
 
 // log out modal will be the modal placed at center and it will show only if the modalstate has some data
 // and this data will be set when we will be clicking the logout button and after if that the confirmation of logout
@@ -80,6 +82,7 @@ function App() {
         <Route path="/contact" element={<ContactUsForm />} />
         <Route path="/catalog/:catalogName" element={<CourseCatalogPage />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} />
+        <Route path="/view-course/:courseId" element={<CourseBar />} />
         <Route
           path="/dashboard"
           element={

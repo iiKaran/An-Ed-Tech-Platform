@@ -21,7 +21,7 @@ export default function Cart() {
                     <RenderCartCourses />
                     <RenderTotalAmount />
                 </div>)
-                : (<p>Your Cart is Empty</p>)}
+                : (<p className=" w-[70vw] text-center h-[90vh] flex items-center justify-center text-[30px] font-bold">Your Cart is Empty</p>)}
         </div>
     )
 }
