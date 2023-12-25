@@ -6,6 +6,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { apiConnector } from '../services/apiconnector'
 import { getEnrolledCourses } from '../services/operations/ProfileApi'
 import { profileEndpoints } from '../services/apis'
+import { useNavigate } from 'react-router-dom';
 const { GET_USER_ENROLLED_COURSES_API } = profileEndpoints;
 
 
@@ -38,6 +39,7 @@ export default function EnrolledPage() {
     }, []);
 
     const [enrolledCourses, SetEnrolledCourses] = useState(null);
+    const  navigate = useNavigate();
     return (
         !open && <>
             <div className='px-3'>
@@ -58,7 +60,10 @@ export default function EnrolledPage() {
                                     </div>
                                     <div className='all-courses flex flex-col gap-0 text-richblack-300  w-[70vw] ' >
                                         {enrolledCourses.map((course, index) => (
-                                            <div className="flex item-center key={index} justify-between py-3 px-8 text-richblack-50">
+                                            <div key={index} className="flex item-center  justify-between py-3 px-8 text-richblack-50 border " onClick={()=>{
+                                                console.log("the coure",course)
+                                                navigate(`/view-course/${course._id}/section/${course?.courseContent[0]._id}/lecture/${course?.courseContent[0]?.subSections?.[0]._id}`)
+                                            }}> 
                                                 <div className=" left-part flex gap-2 items-center">
                                                     <div className='thumbnail'>
                                                         <img src={course.thumbnail} alt="course" className='w-[54px] h-[54px] rounded-lg overflow-hidden' />

@@ -9,44 +9,35 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {  useSelector } from "react-redux";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 export default function CourseBar() {
-  const { courseId } = useParams();
-  const [course, setCourse] = useState(null);
-  const [section, setSection] = useState(null);
-  const [lecture, setLecture] = useState(null);
-
-  async function FetchCourseDetails() {
-    const result = await getCourseDetialsApiCall(courseId);
-    console.log("the result is", result[0]);
-    setCourse(result[0]);
-    setLecture(result[0]?.courseContent[0]?.subSections[0]);
-  }
-  useEffect(() => {
-    FetchCourseDetails();
-  }, [courseId]);
-
+  const { courseEntireData, courseSectionData, currentLectureData } = useSelector(
+    (state) => state.viewCourse
+  );
+  const navigate = useNavigate();
   return (
-    <div className="main-side-div border-b-2">
-      <div className="flex seciton-1">
-        <span> / </span>
+    <div className="main-side-div border-b-2 min-h-[120vh] ">
+      <div className="flex seciton-1 item-center justify-between p-8">
+        <span> <FaArrowAltCircleRight size={"30px"} /> </span>
         <span>Add Review</span>
       </div>
-      <div className="courseName">
-        <span>{course?.courseName}</span>
-        <span>3/5</span>
+      <div className="courseName text-center flex flex-col ">
+        <span className="font-semibold text-[20px] mb-2">{courseEntireData?.[0]?.courseName}</span>
+        <span className=" text-sm text-richblack-400">3/5 Lectures</span>
       </div>
 
-      <div className="flex flex-col  gap-4 py-12  capitalize sticky  min-h-[100%]">
+      <div className="flex flex-col  gap-4 py-12  capitalize sticky  min-h-[100%]  w-[25vw] ">
         <Accordion>
-          {course?.courseContent?.map((item, index) => (
+          {courseEntireData?.[0]?.courseContent?.map((item, index) => (
             <div className="!rounded-lg" key={index}>
               <AccordionItem className=" " backgroundColor="red">
                 <AccordionItemHeading className=" ">
                   <AccordionItemButton color="white">
                     <span
                       className={`flex items-center gap-2 ${
-                        item?._id === section?._id
+                        item?._id === courseSectionData?.[0]?._id
                           ? "!text-yellow-25"
                           : "text-richblack-200"
                       } `}
@@ -69,12 +60,17 @@ export default function CourseBar() {
                             {item.heading}
                             <span
                               className={`flex  cursor-pointer items-center gap-2 ${
-                                subSection?._id === lecture?._id
+                                subSection?._id === currentLectureData._id
                                   ? "text-yellow-25 "
                                   : "text-richblack-400"
                               }`}
-                              onClick={() => {setLecture(subSection)}}
+                              onClick={() => {
+                                navigate(
+                                  `/view-course/${courseEntireData?.[0]?._id}/section/${item._id}/lecture/${subSection._id}`
+                                );
+                              }}
                             >
+
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="18"

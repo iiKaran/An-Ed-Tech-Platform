@@ -169,7 +169,14 @@ exports.enrolledCourses = async(req, res)=>{
 
 	  
 
-	   const user = await User.findById(userId).populate("courses");
+	   const user = await User.findById(userId).populate({
+		path: "courses",
+		populate: {
+		 path: "courseContent",
+		 populate:{
+			path:"subSections"
+		 }
+		}});
 	   return res.status(200).json({
 		success:true, 
 		message:"succesfully enrolled", 
