@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCourseDetialsApiCall } from "../../services/operations/CourseApi";
 import "react-accessible-accordion/dist/fancy-example.css";
+import CourseReviewModal from "../../components/core/CourseView/CourseReviewModal"
 import { IoIosArrowDown } from "react-icons/io";
 import {
   Accordion,
@@ -12,27 +13,45 @@ import {
 import { useNavigate } from "react-router-dom";
 import {  useSelector } from "react-redux";
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import Button from "../../components/core/HomePage/Button";
 export default function CourseBar() {
   const { courseEntireData, courseSectionData, currentLectureData } = useSelector(
     (state) => state.viewCourse
   );
+  const [sectionIndex,setSectionIndex]= useState(findCurrentSectionIndex())
+
+  function findCurrentSectionIndex (){
+    let sectionIndex = -1;
+      courseEntireData?.[0]?.courseContent.forEach((element, index) => {
+        if (element._id === courseSectionData._id) {
+          sectionIndex = index;
+        }
+      });
+      return sectionIndex;
+  }
+  const [reviewModal,setReviewModal]= useState(false);
   const navigate = useNavigate();
   return (
     <div className="main-side-div border-b-2 min-h-[120vh] ">
       <div className="flex seciton-1 item-center justify-between p-8">
         <span> <FaArrowAltCircleRight size={"30px"} /> </span>
-        <span>Add Review</span>
+       
+        <span onClick={()=>{
+          setReviewModal(true);
+          }}>
+        <Button active={true}>Add Review</Button>
+        </span>
       </div>
       <div className="courseName text-center flex flex-col ">
         <span className="font-semibold text-[20px] mb-2">{courseEntireData?.[0]?.courseName}</span>
         <span className=" text-sm text-richblack-400">3/5 Lectures</span>
       </div>
-
+       
       <div className="flex flex-col  gap-4 py-12  capitalize sticky  min-h-[100%]  w-[25vw] ">
-        <Accordion>
+        <Accordion >
+         { console.log(courseSectionData._id,"dafsd")}
           {courseEntireData?.[0]?.courseContent?.map((item, index) => (
-            <div className="!rounded-lg" key={index}>
-              <AccordionItem className=" " backgroundColor="red">
+              <AccordionItem key={index}  >
                 <AccordionItemHeading className=" ">
                   <AccordionItemButton color="white">
                     <span
@@ -98,10 +117,10 @@ export default function CourseBar() {
                   })}
                 </AccordionItemPanel>
               </AccordionItem>
-            </div>
           ))}
         </Accordion>
       </div>
+     {reviewModal && <CourseReviewModal setReviewModal={setReviewModal}/>}
     </div>
   );
 }

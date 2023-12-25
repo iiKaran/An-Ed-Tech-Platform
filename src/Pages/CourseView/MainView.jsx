@@ -152,28 +152,33 @@ export default function MainView() {
   return (
     <div className=" flex flex-col items-center justify-center">
       <div className="flex flex-row  py-8 gap-4 w-[100%] justify-end items-center">
-        {!lastVideo && (
-          <button onClick={nextHandler}>
-            <Button>Next</Button>
-          </button>
-        )}
+        
         {!firstVideo && (
           <button onClick={prevHandler}>
             <Button>Prev</Button>
+          </button>
+        )}
+        {!lastVideo && (
+          <button onClick={nextHandler}>
+            <Button>Next</Button>
           </button>
         )}
         <button>
           <Button active={true}>Mark as Completed</Button>
         </button>
       </div>
-      <div className="player  w-[70vw] h-[800px] text-center">
+      <div className="player  w-[70vw] mb-10 text-center">
         <span className=" rounded-md inline-block mt-12">
           <ReactPlayer
-            // url={currentLectureData?.videoUrl}
+            url={currentLectureData?.videoUrl}
             controls={true}
             width={"50vw"}
           />
         </span>
+      </div>
+      <div className="borde w-[80vh] mx-auto flex flex-col gap-4"> 
+       <span className="font-bold text-[30px]  inline-block   text-xl">{currentLectureData?.title}</span> 
+       <span className=" text-sm text-richblack-400 inline-block ">{currentLectureData?.description}</span>
       </div>
     </div>
   );
