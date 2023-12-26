@@ -46,5 +46,19 @@ export const sidebarLinks = [
     path: "/dashboard/cart",
     type: ACCOUNT_TYPE.STUDENT,
     icon: "VscEdit",
+  }, 
+  {
+    id: 5,
+    name: "Any Question?",
+    path: "/dashboard/ask-enquiry",
+    type: ACCOUNT_TYPE.STUDENT,
+    icon: "VscAdd",
+  },
+  {
+    id: 6,
+    name: "Solve Enquiry",
+    path: "/dashboard/solve-enquiry",
+    type: ACCOUNT_TYPE.INSTRUCTOR,
+    icon: "VscAdd",
   }
 ];

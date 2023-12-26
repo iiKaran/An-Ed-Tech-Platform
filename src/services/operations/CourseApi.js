@@ -11,7 +11,7 @@ import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from '../apis'
 // import { setCourse } from '../../slices/courseSlice.js'
 
-const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API,UPDATE_COURSE_STATUS_API, GET_ALL_COURSE_API,COURSE_DETAILS_API,CREATE_RATING_API,LECTURE_COMPLETION_API} =courseEndpoints;
+const {CREATE_SECTION_API,CREATE_COURSE_API,EDIT_COURSE_API,CREATE_SUBSECTION_API,DELETE_SECTION_API, DELETE_SUBSECTION_API,UPDATE_COURSE_STATUS_API, GET_ALL_COURSE_API,COURSE_DETAILS_API,CREATE_RATING_API,LECTURE_COMPLETION_API,ASK_AN_ENQUIRY_API,RESPOND_AN_ENQUIRY_API,ALL_ENQUIRY_BY_STUDENT,ALL_ENQUIRY_FOR_INSTRUTOR} =courseEndpoints;
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
@@ -277,3 +277,112 @@ export const markLectureAsComplete = async (data, token) => {
   toast.dismiss(toastId)
   return result
 }
+
+export const askAnEnquiry = async (data, token) => {
+  let result = null
+  
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST", ASK_AN_ENQUIRY_API, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log(
+      "ASK AN ENQUIRY API RESPONSE............",
+      response
+    )
+
+    if (!response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Query Posted...")
+    result = response.data.data
+  } catch (error) {
+    console.log("ask query  API ERROR............", error)
+    toast.error(error.message)
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+export const respondAnEnquiry = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST",RESPOND_AN_ENQUIRY_API, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log(
+      "RESPOND AN ENQUIRY API RESPONSE............",
+      response
+    )
+
+    if (!response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Query Resolved...")
+    result = response.data.data
+  } catch (error) {
+    console.log("resolve Query API ERROR............", error)
+    toast.error(error.message)
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+
+export const queriesAskedByMe = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("GET",ALL_ENQUIRY_BY_STUDENT, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log(
+      "ASKED ENQUIRIES API RESPONSE............",
+      response
+    )
+
+    if (!response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Queries Fetched...")
+    result = response.data.data
+  } catch (error) {
+    console.log("asked  Query API ERROR............", error)
+    toast.error(error.message)
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+
+export const queriesAskedToMe = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("GET",ALL_ENQUIRY_FOR_INSTRUTOR, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log(
+      "INstrurcor Enquires API RESPONSE............",
+      response
+    )
+
+    if (!response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Queries Fetched...")
+    result = response.data.data
+  } catch (error) {
+    console.log("INstrutoor Enquires API ERROR............", error)
+    toast.error(error.message)
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+

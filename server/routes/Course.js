@@ -14,6 +14,8 @@ const {createSection, updateSection, deleteSection} = require("../controllers/Se
 const {createSubSection, updateSubSection, deleteSubSection} = require("../controllers/SubSection");
 //  course  has 3 types of route -> 
 const {updateCourseProgress,getProgressPercentage}= require("../controllers/courseProgress");
+
+const {getAllEnquiriesAskedToInstructor, getAllEnquiriesByStudent,AskAnEnquiry,respondAnEnquiry} = require("../controllers/Enquires")
  // !    1. create/update/delete course that is by instructer that includes section api and subsections apis a;so
 //  !     2. category controlls  that is by Admin 
 //  !     3. Rating and Review to the cousrse that is by admin
@@ -59,4 +61,10 @@ router.post("/updateCourseStatus",auth,isInstructor,updateStatus);
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress)
 // To get Course Progress
 router.post("/getProgressPercentage", auth, isStudent, getProgressPercentage)
+
+router.post("/askAnEnquiry", auth,isStudent,AskAnEnquiry); 
+router.post("/respondAnEnquiry", auth,isInstructor,respondAnEnquiry); 
+router.get("/getAllEnquiriesByStudent", auth,isStudent,getAllEnquiriesByStudent); 
+router.get("/getAllEnquiriesAskedToInstructor", auth,isInstructor,getAllEnquiriesAskedToInstructor); 
+
 module.exports = router;
