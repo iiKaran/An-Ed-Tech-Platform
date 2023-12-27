@@ -4,6 +4,7 @@ exports.AskAnEnquiry = async (req, res) => {
   try {
     const { question, askTo } = req.body;
     const userId = req.user.id; // due to middlewares
+    console.log(askTo)
     if (!question || !userId) {
       return res.status(400).json({
         success: false,
@@ -48,8 +49,10 @@ exports.AskAnEnquiry = async (req, res) => {
 
 exports.respondAnEnquiry = async (req, res) => {
   try {
-    const { enquiryId, answer } = req.body;
+    const { queryId, answer } = req.body;
     const userId = req.user.id;
+    
+    const enquiryId = queryId;
 
     const foundQuery = await Enquiry.findByIdAndUpdate(enquiryId, {
       answer: answer,
@@ -83,7 +86,7 @@ exports.getAllEnquiriesByStudent = async (req, res) => {
     // found
     const queries = await Enquiry.find({
       askBy: studentId,
-    }).populate("respondBy");
+    }).populate("askTo");
 
     return res.status(200).json({
       success: true,
@@ -111,6 +114,7 @@ exports.getAllEnquiriesAskedToInstructor = async (req, res) => {
     }
     const queries = await Enquiry.find({
       askTo: userId,
+      answer:null,
     }).populate("askBy");
 
     return res.status(200).json({

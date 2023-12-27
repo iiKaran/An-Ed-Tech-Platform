@@ -85,7 +85,7 @@ export default function CourseBar() {
                               }`}
                               onClick={() => {
                                 navigate(
-                                  `/view-course/${courseEntireData?.[0]?._id}/section/${item._id}/lecture/${subSection._id}`
+                                  `/view-course/${courseEntireData?.[0]?._id}/section/${item?._id}/lecture/${subSection._id}`
                                 );
                               }}
                             >

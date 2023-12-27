@@ -306,6 +306,7 @@ export const askAnEnquiry = async (data, token) => {
 }
 
 export const respondAnEnquiry = async (data, token) => {
+  console.log("the data",data)
   let result = null
   const toastId = toast.loading("Loading...")
   try {

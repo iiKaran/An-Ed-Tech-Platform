@@ -46,7 +46,7 @@ export const courseEndpoints = {
   ASK_AN_ENQUIRY_API:BASE_URL + "/course/askAnEnquiry",
   RESPOND_AN_ENQUIRY_API:BASE_URL + "/course/respondAnEnquiry",
   ALL_ENQUIRY_BY_STUDENT:BASE_URL + "/course/getAllEnquiriesByStudent",
-  ALL_ENQUIRY_FOR_INSTRUTOR:BASE_URL + "/course/getAllEnquiriesByStudent",
+  ALL_ENQUIRY_FOR_INSTRUTOR:BASE_URL + "/course//getAllEnquiriesAskedToInstructor",
 }
 
 // RATINGS AND REVIEWS

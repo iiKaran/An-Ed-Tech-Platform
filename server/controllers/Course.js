@@ -81,7 +81,7 @@ exports.createCourse = async (req, res) => {
 		const newCourse = await Course.create({
 			courseName,
 			courseDescription,
-			instructor: instructorDetails._id,
+			instructor:userId,
 			whatYouWillLearn:whatYouWillLearn,
 			price,
 			tags: tag,
@@ -221,7 +221,7 @@ exports.getCourseDetails = async (req, res) => {
   const {courseId} = req.body;
   // find the details of course 
   const courseDetails = await Course.find({ _id: courseId }).populate({
-   path: "instructer",
+   path: "instructor",
    populate: {
     path: "additionalDetails",
    },

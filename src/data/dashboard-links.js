@@ -49,8 +49,8 @@ export const sidebarLinks = [
   }, 
   {
     id: 5,
-    name: "Any Question?",
-    path: "/dashboard/ask-enquiry",
+    name: "Queries",
+    path: "/dashboard/asked-enquiries",
     type: ACCOUNT_TYPE.STUDENT,
     icon: "VscAdd",
   },

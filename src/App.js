@@ -26,6 +26,8 @@ import CourseDetails from "./Pages/CourseDetails";
 import CompleteView from "./Pages/CourseView/CompleteView";
 import CourseBar from "./Pages/CourseView/CourseBar";
 import MainView from "./Pages/CourseView/MainView";
+import QueriesRespond from "./Pages/QueriesRespond";
+import QueriesAsked from "./Pages/QueriesAsked";
 
 // log out modal will be the modal placed at center and it will show only if the modalstate has some data
 // and this data will be set when we will be clicking the logout button and after if that the confirmation of logout
@@ -99,6 +101,8 @@ function App() {
             </CloseRoute>
           }
         >
+          <Route path ="/dashboard/asked-enquiries" element={<QueriesAsked></QueriesAsked>}></Route>
+          <Route path ="dashboard/solve-enquiry" element={<QueriesRespond></QueriesRespond>}></Route>
           <Route path="dashboard/my-profile" element={<Myprofile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
