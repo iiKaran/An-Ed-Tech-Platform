@@ -18,17 +18,23 @@ export default function EnrolledPage() {
     async function caller() {
         try {
             const toastId = toast.loading("Loading...")
-            dispatch(setLoading(true))
+            // dispatch(setLoading(true))
+
+            try{
             const response = await apiConnector("POST", GET_USER_ENROLLED_COURSES_API, token, {
                 // "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${token}`
             });
-            dispatch(setLoading(false))
+            // dispatch(setLoading(false))
             toast.dismiss(toastId);
-           
-            
             // console.log(response.data.data[0].progress)
             SetEnrolledCourses(response.data.data)
+        }
+        catch(err)
+        {
+            toast.dismiss(toastId);
+        }
+            
             return;
         }
         catch (err) {
