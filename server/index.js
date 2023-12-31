@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
  cors({
-  origin:"https://an-ed-tech-platform.vercel.app/", 
+  origin:"*", 
   credentials:true
  })
 ); 
