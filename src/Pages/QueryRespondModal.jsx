@@ -30,7 +30,7 @@ export default function QueryRespondModal({ setModalData, responseData }) {
       <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
         {/* Modal Header */}
         <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
-          <p className="text-xl font-semibold text-richblack-5">Add Review</p>
+          <p className="text-xl font-semibold text-richblack-5">Answer the Query</p>
           <button onClick={() => setModalData(null)}>
             <RxCross2 className="text-2xl text-richblack-5" />
           </button>

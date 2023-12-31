@@ -123,7 +123,7 @@ export default function MainView() {
     setLoading(true);
     const res = await markLectureAsComplete(
       {
-        courseId: courseEntireData?.[0]._id,
+        courseId: courseEntireData?.[0]?._id,
         subsectionId: currentLectureData._id,
       },
       token
@@ -190,8 +190,8 @@ export default function MainView() {
             <Button>Next</Button>
           </button>
         )}
-        <button>
-          <Button active={true}>Mark as Completed</Button>
+        <button onClick={handleLectureCompletion}>
+         Mark as Completed
         </button>
       </div>
       <div className="player  w-[70vw] mb-10 text-center">

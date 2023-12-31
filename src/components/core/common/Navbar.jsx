@@ -10,6 +10,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import ProfileDropDown from "../auth/ProfileDropDown";
 import { apiConnector } from "../../../services/apiconnector";
 import { categories } from "../../../services/apis";
+import { ACCOUNT_TYPE } from "../../../utils/constants";
 export default function Navbar() {
   const [subLinks, setSubLinks] = useState([]);
 
@@ -33,7 +34,7 @@ export default function Navbar() {
   }
   useEffect(() => {
     fetchData();
-  });
+  },[]);
 
   const location = useLocation();
   const { token } = useSelector((state) => state.auth);
@@ -54,8 +55,8 @@ export default function Navbar() {
           <ul className="flex gap-x-6 text-richblack-25">
             {NavbarLinks.map((element, index) => (
               <li key={index}>
-                {element.title === "Catalog" ? (
-                  <div className="relative flex items-center gap-2 group">
+                {(element.title === "Catalog") ? (
+                   <div className="relative flex items-center gap-2 group">
                     <p>{element.title}</p>
                     <IoIosArrowDropdownCircle />
 

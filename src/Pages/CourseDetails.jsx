@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCourseDetialsApiCall } from "../services/operations/CourseApi";
 import RatingStars from "../components/core/common/RatingStar";
 import Button from "../components/core/HomePage/Button";
@@ -20,10 +20,10 @@ import {
 // Demo styles, see 'Styles' section below for some notes on use.
 import "react-accessible-accordion/dist/fancy-example.css";
 import { addToCart } from "../slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CourseDetails() {
-  const [isEnrolled,setisEnrolled]= useState(false);
+  const [isEnrolled, setisEnrolled] = useState(false);
   const dispatch = useDispatch();
   async function addCartHandler() {
     // add the course details to the cart global states
@@ -31,6 +31,9 @@ export default function CourseDetails() {
   }
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
+  const { token } = useSelector((state) => state.auth);
+  const {user}= useSelector((state)=>state.profile )
+  const navigate = useNavigate();
   function totalLecture() {
     let lecture = 0;
 
@@ -47,7 +50,7 @@ export default function CourseDetails() {
   }
   useEffect(() => {
     if (courseId) FetchCourseDetails();
-  }, [courseId,isEnrolled]);
+  }, [courseId, isEnrolled]);
   const avgReviewCount = 4.5;
   return (
     <div className=" box-content px-4">
@@ -139,13 +142,15 @@ export default function CourseDetails() {
                                     {subSection.description}
                                   </span>
                                 </p>
-                                { isEnrolled && <div className=" flex justify-center p-12 mt-14 mb-8 bg-[#161D29] rounded-lg">
-                                  <ReactPlayer
-                                    url={subSection.videoUrl}
-                                    controls={true}
-                                    className="w-[100%]"
-                                  />
-                                </div>}
+                                {isEnrolled && (
+                                  <div className=" flex justify-center p-12 mt-14 mb-8 bg-[#161D29] rounded-lg">
+                                    <ReactPlayer
+                                      url={subSection.videoUrl}
+                                      controls={true}
+                                      className="w-[100%]"
+                                    />
+                                  </div>
+                                )}
                               </div>
                             </AccordionItemPanel>
                           </AccordionItem>
@@ -159,7 +164,7 @@ export default function CourseDetails() {
           </div>
         </div>
 
-        <div className="text-white flex flex-col w-[30%]  rounded-lg absolute right-[10%] top-20 bg-richblack-800">
+  <div className="text-white flex flex-col w-[30%]  rounded-lg absolute right-[10%] top-20 bg-richblack-800">
           <img
             src={course?.thumbnail}
             alt="laoding"
@@ -168,21 +173,39 @@ export default function CourseDetails() {
           <div className="price font-bold p-4 text-[30px]">
             Rs. {course?.price}
           </div>
-          <div className="btns">
-            <button className=" w-[100%] text-center" onClick={addCartHandler}>
-              <Button active={true} classes=" w-[90%] mx-auto ">
-                Add to Cart
-              </Button>
-            </button>
+          {   user?.accountType === "student" &&    <div className="btns">
+            {token ? (
+              <button
+                className=" w-[100%] text-center"
+                onClick={addCartHandler}
+              >
+                <Button active={true} classes=" w-[90%] mx-auto ">
+                  Add to Cart
+                </Button>{" "}
+                
+              </button>
+            ) : (
+              <button
+                className=" w-[100%] text-center"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                <Button active={true} classes=" w-[90%] mx-auto ">
+                  Login to get Enroll
+                </Button>
+              </button>
+            )}
             <button className=" w-[100%] text-center">
               <Button
                 active={false}
                 classes=" my-3 w-[90%] mx-auto !bg-richblack-300 "
               >
-                Buy Now
+                Avail Now
               </Button>
             </button>
           </div>
+}
           <p className="capitalize text-center text-sm text-richblack-25">
             30-days-money-Back-gurrantee
           </p>

@@ -5,9 +5,9 @@ import { toast } from 'react-hot-toast'
 import ProgressBar from "@ramonak/react-progress-bar";
 import { apiConnector } from '../services/apiconnector'
 import { getEnrolledCourses } from '../services/operations/ProfileApi'
-import { profileEndpoints } from '../services/apis'
+import { courseEndpoints } from '../services/apis'
 import { useNavigate } from 'react-router-dom';
-const { GET_USER_ENROLLED_COURSES_API } = profileEndpoints;
+const { GET_USER_ENROLLED_COURSES_API,GET_PROGRESS_PERCENTAGE_API } = courseEndpoints;
 
 
 
@@ -19,12 +19,15 @@ export default function EnrolledPage() {
         try {
             const toastId = toast.loading("Loading...")
             dispatch(setLoading(true))
-            const response = await apiConnector("GET", GET_USER_ENROLLED_COURSES_API, token, {
+            const response = await apiConnector("POST", GET_USER_ENROLLED_COURSES_API, token, {
                 // "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${token}`
             });
             dispatch(setLoading(false))
             toast.dismiss(toastId);
+           
+            
+            // console.log(response.data.data[0].progress)
             SetEnrolledCourses(response.data.data)
             return;
         }
@@ -32,13 +35,16 @@ export default function EnrolledPage() {
             toast.error("Could not get any Enrolled Course")
         }
     }
+    async function percentageProgress(){
+          
+    }
     useEffect(() => {
         // populate the enrolled courses here
         caller();
 
-    }, []);
+    },[]);
 
-    const [enrolledCourses, SetEnrolledCourses] = useState(null);
+    const [enrolledCourses, SetEnrolledCourses] = useState([]);
     const  navigate = useNavigate();
     return (
         !open && <>
@@ -55,7 +61,7 @@ export default function EnrolledPage() {
                                 <div className='flex flex-col gap-0  w-[70vw]'>
                                     <div className="col-head   bg-richblack-700   flex item-center justify-between py-3 px-6 text-richblack-50">
                                         <div className="heading">Course Name</div>
-                                        <div className="heading">Durations</div>
+                                        <div className="heading">No of Lectures</div>
                                         <div className="heading">Progress</div>
                                     </div>
                                     <div className='all-courses flex flex-col gap-0 text-richblack-300  w-[70vw] ' >
@@ -76,11 +82,12 @@ export default function EnrolledPage() {
 
                                                 </div>
                                                 <div className="duration text-richblack-300">
-                                                    {`${course.duration ? course.duration : "2hr 30min"}`}
+                                                    {`${course.duration ? course.duration : "NAN"}`}
                                                 </div>
-                                                <div className="heading  flex  flex-col gap-1 items-center justify-center">
-                                                    <p > progress {course.completed ? course.completed : "60"}%</p>
-                                                    <ProgressBar completed={course.completed ? course.completed : "60"} className=' w-[220px] h-1 ' isLabelVisible={false} bgColor={"#FFE83D"}></ProgressBar>
+                                            <div className="heading  flex  flex-col gap-1 items-center justify-center">
+                                                    
+                                                    <p > progress {course.progress} %</p>
+                                                    <ProgressBar completed={course.progress} className=' w-[220px] h-1 ' isLabelVisible={false} bgColor={"#FFE83D"}></ProgressBar>
                                                 </div>
                                             </div>
                                         ))}

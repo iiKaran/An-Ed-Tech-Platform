@@ -84,7 +84,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUsForm />} />
         <Route path="/catalog/:catalogName" element={<CourseCatalogPage />} />
-        <Route path="/courses/:courseId" element={<CourseDetails />} />
+       
+        
         <Route path="/view-course/:courseId/section/:sectionId/lecture/:subSectionId" element={<CompleteView />} />
         <Route
           path="/dashboard"
@@ -94,10 +95,20 @@ function App() {
             </div>
           }
         ></Route>
+
+<Route path="/courses/:courseId" element={
+<CloseRoute>
+  {
+    
+   <CourseDetails /> 
+  }
+</CloseRoute>} />
         <Route
           element={
             <CloseRoute>
+              {
               <Dashboard />
+          }
             </CloseRoute>
           }
         >

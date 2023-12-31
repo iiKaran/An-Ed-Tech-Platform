@@ -230,6 +230,7 @@ export const getCourseDetialsApiCall = async (courseId) => {
 
 // create a rating for course
 export const createRating = async (data, token) => {
+  console.log("data before sendoing",data)
   const toastId = toast.loading("Loading...")
   let success = false
   try {
@@ -238,14 +239,16 @@ export const createRating = async (data, token) => {
     })
     console.log("CREATE RATING API RESPONSE............", response)
     if (!response?.data?.success) {
+       
       throw new Error("Could Not Create Rating")
     }
     toast.success("Rating Created")
     success = true
   } catch (error) {
     success = false
-    console.log("CREATE RATING API ERROR............", error)
-    toast.error(error.message)
+    console.log("CREATE RATING API ERROR............")
+    if(error.response.status)
+    toast.error("User Already Reviewed the Course")
   }
   toast.dismiss(toastId)
   return success

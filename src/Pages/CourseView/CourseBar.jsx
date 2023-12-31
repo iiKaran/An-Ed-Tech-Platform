@@ -12,7 +12,7 @@ import {
 } from "react-accessible-accordion";
 import { useNavigate } from "react-router-dom";
 import {  useSelector } from "react-redux";
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import Button from "../../components/core/HomePage/Button";
 export default function CourseBar() {
   const { courseEntireData, courseSectionData, currentLectureData } = useSelector(
@@ -34,7 +34,9 @@ export default function CourseBar() {
   return (
     <div className="main-side-div border-b-2 min-h-[120vh] ">
       <div className="flex seciton-1 item-center justify-between p-8">
-        <span> <FaArrowAltCircleRight size={"30px"} /> </span>
+        <span onClick={()=>{
+          navigate("/dashboard/enrolled-courses")
+        }}> <FaArrowAltCircleLeft size={"30px"} /> </span>
        
         <span onClick={()=>{
           setReviewModal(true);
