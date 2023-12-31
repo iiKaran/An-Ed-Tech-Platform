@@ -53,7 +53,7 @@ router.get("/getReviews",getAllRating)
 
 // temp route to enrol in the course 
 router.post("/enrollinCourse", auth , isStudent,enrollInCourse);
-router.get("/getEnrolledCourses", auth ,isStudent,enrolledCourses);
+router.post("/getEnrolledCourses", auth ,isStudent,enrolledCourses);
 
 
 // update the course status 

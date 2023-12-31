@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const courseProgress = new mongoose.Schema({
-  courseID: {
+  courseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
   },
@@ -13,6 +13,7 @@ const courseProgress = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "SubSection",
+      default:[]
     },
   ],
 })

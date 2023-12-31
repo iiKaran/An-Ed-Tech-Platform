@@ -6,6 +6,8 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const {uploadImagetoCloudinary} = require("../utilities/ImageUploader");
+const courseProgress = require("../models/CourseProgress");
+
 // createCourse 
 
 exports.createCourse = async (req, res) => {
@@ -134,12 +136,21 @@ exports.enrollInCourse = async(req, res)=>{
        const userId = req.user.id;
 	   const {courseId}= req.body;
 
-	   const foundCourse =await Course.findById(courseId); 
+	   const foundCourse =await Course.findById(courseId)
 	   if(!foundCourse)
 	   {
 		return res.status(404).json({
 			success:false , 
 			message:"no such course found"
+		})
+	   }
+	    // console.log(foundCourse)
+	   const check = foundCourse?.studentsEnrolled?.includes(userId);
+	   if(check)
+	   {
+		return res.status(403).json({
+			success:false, 
+			message:"Already Enrolled", 
 		})
 	   }
 
@@ -148,6 +159,15 @@ exports.enrollInCourse = async(req, res)=>{
 	   },{
 		new:true
 	   })
+	   const courseUpdated = await Course.findByIdAndUpdate(courseId,{
+		$push:{studentsEnrolled:userId}
+	   },{new:true});
+       
+	   const courseProgressCreated = await courseProgress.create({
+		courseId:courseId, 
+		userId:userId
+	   }); 
+	   console.log("the progress", courseProgressCreated)
 	   return res.status(200).json({
 		success:true, 
 		message:"succesfully enrolled", 
@@ -166,9 +186,6 @@ exports.enrollInCourse = async(req, res)=>{
 exports.enrolledCourses = async(req, res)=>{
 	try{
        const userId = req.user.id;
-
-	  
-
 	   const user = await User.findById(userId).populate({
 		path: "courses",
 		populate: {
@@ -177,10 +194,60 @@ exports.enrolledCourses = async(req, res)=>{
 			path:"subSections"
 		 }
 		}});
+		const courses = user["courses"];
+		let ans =[]
+		for(let i =0; i < courses.length;i++)
+		{
+			let course = courses[i];
+			let prog= await courseProgress.findOne({
+				courseId: course._id,
+				userId: userId,
+			  })
+				.populate({
+				  path: "courseId",
+				  populate: {
+					path: "courseContent",
+				  },
+				})
+				.exec();
+                
+				if (!prog) {
+					return res
+					  .status(400)
+					  .json({ error: "Can not find Course Progress with these IDs." });
+				  }
+				  let lectures = 0;
+				  prog.courseId.courseContent?.forEach((sec) => {
+					lectures += sec.subSections.length || 0;
+				  });
+			  
+				  let progressPercentage =
+					(prog.completedVideos.length / lectures) * 100;
+			  
+				  // To make it up to 2 decimal point
+				  const multiplier = Math.pow(10, 2);
+				  progressPercentage =
+					Math.round(progressPercentage * multiplier) / multiplier;
+				const newobj = {
+					_id:course._id , 
+					duration:lectures, 
+					courseName: course.courseName, 
+					courseDescription:course.courseDescription,
+					courseContent:course.courseContent,
+					progress:progressPercentage,
+					thumbnail:course.thumbnail
+ 
+				}
+
+				ans.push(newobj)
+		}
+
+
+
 	   return res.status(200).json({
 		success:true, 
 		message:"succesfully enrolled", 
-		data:user["courses"]
+		data:ans
 	   })
 	}
 	catch(err){

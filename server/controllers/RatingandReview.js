@@ -1,7 +1,7 @@
 const RatingAndReview = require("../models/RatingAndReview"); 
 
 const Course = require("../models/Course"); 
-const { default: mongoose } = require("mongoose");
+const {mongoose } = require("mongoose");
 
 // create rating 
 exports.createRating = async(req , res)=>{
@@ -9,7 +9,9 @@ exports.createRating = async(req , res)=>{
   // get user id 
      const userId = req.user.id ; 
   // get course id , review , rating 
-     const{courseId ,review , rating} = req.body ; 
+     const{courseId ,rating , review} = req.body ; 
+ 
+     console.log("req come with", courseId , review , rating, userId)
   // validate check user has the respective course 
       const courseDetails = await Course.findOne({
        _id:courseId, 
@@ -17,13 +19,13 @@ exports.createRating = async(req , res)=>{
       }
       }); 
     
-   if(!courseDetails)
-   {
-    return res.status(400).json({
-     success: false , 
-     message: "student is not enrolled in the course"
-    })
-   }
+   // if(!courseDetails)
+   // {
+   //  return res.status(400).json({
+   //   success: false , 
+   //   message: "student is not enrolled in the course"
+   //  })
+   // }
   // user already posted the review
   const alreadyReviewed = await RatingAndReview.findOne(
   { user:userId, 

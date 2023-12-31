@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
-const CourseProgress = require("../models/CourseProgress");
+const courseProgress = require("../models/CourseProgress");
 const Course = require("../models/Course");
 
 exports.updateCourseProgress = async (req, res) => {
@@ -15,12 +15,12 @@ exports.updateCourseProgress = async (req, res) => {
     }
 
     // Find the course progress document for the user and course
-    let courseProgress = await CourseProgress.findOne({
-      courseID: courseId,
+    let progress = await courseProgress.findOne({
+      courseId: courseId,
       userId: userId,
     });
-
-    if (!courseProgress) {
+    
+    if (!progress) {
       // If course progress doesn't exist, create a new one
       return res.status(404).json({
         success: false,
@@ -28,16 +28,16 @@ exports.updateCourseProgress = async (req, res) => {
       });
     } else {
       // If course progress exists, check if the subsection is already completed
-      if (courseProgress.completedVideos.includes(subsectionId)) {
+      if (progress.completedVideos.includes(subsectionId)) {
         return res.status(400).json({ error: "Subsection already completed" });
       }
 
       // Push the subsection into the completedVideos array
-      courseProgress.completedVideos.push(subsectionId);
+      progress.completedVideos.push(subsectionId);
     }
 
     // Save the updated course progress
-    await courseProgress.save();
+    await progress.save();
 
     return res.status(200).json({ message: "Course progress updated" });
   } catch (error) {
@@ -56,31 +56,31 @@ exports.getProgressPercentage = async (req, res) => {
 
   try {
     // Find the course progress document for the user and course
-    let courseProgress = await CourseProgress.findOne({
-      courseID: courseId,
+    let progress = await courseProgress.findOne({
+      courseId: courseId,
       userId: userId,
     })
       .populate({
-        path: "courseID",
+        path: "courseId",
         populate: {
           path: "courseContent",
         },
       })
       .exec();
 
-    if (!courseProgress) {
+    if (!progress) {
       return res
         .status(400)
         .json({ error: "Can not find Course Progress with these IDs." });
     }
-    console.log(courseProgress, userId);
+    console.log(progress, userId);
     let lectures = 0;
-    courseProgress.courseID.courseContent?.forEach((sec) => {
-      lectures += sec.subSection.length || 0;
+    progress.courseId.courseContent?.forEach((sec) => {
+      lectures += sec.subSections.length || 0;
     });
 
     let progressPercentage =
-      (courseProgress.completedVideos.length / lectures) * 100;
+      (progress.completedVideos.length / lectures) * 100;
 
     // To make it up to 2 decimal point
     const multiplier = Math.pow(10, 2);
